@@ -3,7 +3,7 @@ function createProductImageElement(imageSource) {
   img.className = 'item__image';
   img.src = imageSource;
   return img;
-}
+} 
 
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
@@ -28,8 +28,8 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
+function cartItemClickListener() {
+ 
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -37,7 +37,51 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  
   return li;
 }
 
-window.onload = () => { };
+// requisito 02
+async function buscarItem(evento) {
+  console.log('judas2', evento.target.parentNode);
+  const retSku = getSkuFromProductItem(evento.target.parentNode);
+  const space = document.querySelector('.cart__items');
+  const buscaItem = await fetchItem(retSku);
+       const retornoItem = {
+      sku: buscaItem.id, 
+      name: buscaItem.title,
+      salePrice: buscaItem.price,      
+    };    
+    space.appendChild(createCartItemElement(retornoItem));
+     
+  return buscaItem;
+}
+
+// requisito 01
+async function buscarProdutos(produto) {
+  const espace = document.querySelector('.items'); 
+  // salva o valor de procurar o computador
+  const buscaProdut = await fetchProducts(produto); 
+   // salvando o valor de results
+  buscaProdut.results.forEach((element) => {
+    const retornoValor = {
+      sku: element.id, 
+      name: element.title,
+      image: element.thumbnail,
+    };
+    espace.appendChild(createProductItemElement(retornoValor));
+  });
+  const buscaBotao = document.querySelectorAll('.item__add');
+  buscaBotao.forEach((element) => element.addEventListener('click', buscarItem));
+  console.log('judas', buscaBotao);
+  /* console.log(espace);
+  console.log(buscaProdut); */
+    return buscaProdut;
+}
+
+// requisito 03
+
+window.onload = () => {  
+  buscarProdutos('computador');  
+  buscarItem('MLB1341706310');  
+};
