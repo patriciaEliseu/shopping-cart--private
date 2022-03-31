@@ -1,3 +1,5 @@
+const space = document.querySelectorAll('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -29,10 +31,9 @@ function getSkuFromProductItem(item) {
 }
 // requisito 03
 function cartItemClickListener(event) {
- const seleLi = document.querySelectorAll('.cart__items');
  const pegEsv = document.querySelector('.empty-cart');
 //  console.log('judas', cartItemClickListener);
- event.target.remove(seleLi);
+ event.target.remove(space);
  event.target.remove(pegEsv);
 }
 
@@ -49,8 +50,8 @@ function createCartItemElement({ sku, name, salePrice }) {
 async function buscarItem(evento) {
   // console.log('judas2', evento.target.parentNode);
   const retSku = getSkuFromProductItem(evento.target.parentNode);
-  console.log(retSku);
-  const space = document.querySelector('.cart__items');
+  console.log('judas', retSku);
+  // const space = document.querySelector('.cart__items');
   const buscaItem = await fetchItem(retSku);
        const retornoItem = {
       sku: buscaItem.id, 
@@ -58,7 +59,9 @@ async function buscarItem(evento) {
       salePrice: buscaItem.price,      
     };    
     space.appendChild(createCartItemElement(retornoItem));
-     
+    // requisito 4
+  saveCartItems(space.innerHTML); 
+  
   return buscaItem;
 }
 
@@ -86,5 +89,9 @@ async function buscarProdutos(produto) {
 
 window.onload = async () => {  
   await buscarProdutos('computador');  
-  await buscarItem();  
-};
+  await buscarItem();
+  const trazer = getSavedCartItems('cartItems');
+  // const space = document.querySelector('.cart__items');
+  space.innerHTML = trazer;
+  console.log(trazer);
+  };
