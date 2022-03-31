@@ -27,9 +27,13 @@ function createProductItemElement({ sku, name, image }) {
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
-
-function cartItemClickListener() {
- 
+// requisito 03
+function cartItemClickListener(event) {
+ const seleLi = document.querySelectorAll('.cart__items');
+ const pegEsv = document.querySelector('.empty-cart');
+//  console.log('judas', cartItemClickListener);
+ event.target.remove(seleLi);
+ event.target.remove(pegEsv);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -43,8 +47,9 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 // requisito 02
 async function buscarItem(evento) {
-  console.log('judas2', evento.target.parentNode);
+  // console.log('judas2', evento.target.parentNode);
   const retSku = getSkuFromProductItem(evento.target.parentNode);
+  console.log(retSku);
   const space = document.querySelector('.cart__items');
   const buscaItem = await fetchItem(retSku);
        const retornoItem = {
@@ -73,15 +78,13 @@ async function buscarProdutos(produto) {
   });
   const buscaBotao = document.querySelectorAll('.item__add');
   buscaBotao.forEach((element) => element.addEventListener('click', buscarItem));
-  console.log('judas', buscaBotao);
+  // console.log('judas', buscaBotao);
   /* console.log(espace);
   console.log(buscaProdut); */
     return buscaProdut;
 }
 
-// requisito 03
-
-window.onload = () => {  
-  buscarProdutos('computador');  
-  buscarItem('MLB1341706310');  
+window.onload = async () => {  
+  await buscarProdutos('computador');  
+  await buscarItem();  
 };
