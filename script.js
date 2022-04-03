@@ -1,5 +1,5 @@
-const space = document.querySelectorAll('.cart__items');
-
+ const space = document.querySelector('.cart__items');
+console.log('judas2222', space);
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -31,9 +31,10 @@ function getSkuFromProductItem(item) {
 }
 // requisito 03
 function cartItemClickListener(event) {
+ const tomar = document.querySelectorAll('.cart__items');
  const pegEsv = document.querySelector('.empty-cart');
 //  console.log('judas', cartItemClickListener);
- event.target.remove(space);
+ event.target.remove(tomar);
  event.target.remove(pegEsv);
 }
 
@@ -47,9 +48,9 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 // requisito 02
-async function buscarItem(evento) {
-  // console.log('judas2', evento.target.parentNode);
-  const retSku = getSkuFromProductItem(evento.target.parentNode);
+async function buscarItem(elemento) {
+  console.log('judas3', elemento);
+  const retSku = getSkuFromProductItem(elemento.target.parentNode);
   console.log('judas', retSku);
   // const space = document.querySelector('.cart__items');
   const buscaItem = await fetchItem(retSku);
@@ -89,9 +90,10 @@ async function buscarProdutos(produto) {
 
 window.onload = async () => {  
   await buscarProdutos('computador');  
-  await buscarItem();
+  await buscarItem('MLB1615760527');
+  // requisito 04;
   const trazer = getSavedCartItems('cartItems');
   // const space = document.querySelector('.cart__items');
   space.innerHTML = trazer;
-  console.log(trazer);
+  console.log('teste1 ', trazer);
   };
