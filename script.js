@@ -89,11 +89,13 @@ async function buscarProdutos(produto) {
 }
 
 window.onload = async () => {  
+  // requisito 1
   await buscarProdutos('computador');  
+   // requisito 04;
+   const trazer = getSavedCartItems('cartItems');
+   // const space = document.querySelector('.cart__items');
+   space.innerHTML = trazer;
+   console.log('teste1 ', trazer);
+// requisito 02
   await buscarItem('MLB1615760527');
-  // requisito 04;
-  const trazer = getSavedCartItems('cartItems');
-  // const space = document.querySelector('.cart__items');
-  space.innerHTML = trazer;
-  console.log('teste1 ', trazer);
-  };
+   };
