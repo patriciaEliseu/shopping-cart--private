@@ -8,6 +8,16 @@ function createProductImageElement(imageSource) { /* traz as imagens */
   return img;
 }
 
+function apagaTudo() { /* estou apagando todo o innerHtml */
+  space.innerHTML = ' ';
+}
+
+function buscaBotaoEsvaziaCarrinho() {
+  const vem = document.querySelector('.empty-cart');
+  vem.addEventListener('click', apagaTudo);
+  // console.log(vem);
+}
+
 function salvaCarrinho() {
   saveCartItems(space.innerHTML);
 }
@@ -102,4 +112,5 @@ window.onload = async () => {
   await buscarProdutos('computador');
   // requisito 02
   // await buscarItem('MLB1615760527');
+  buscaBotaoEsvaziaCarrinho();
 };
