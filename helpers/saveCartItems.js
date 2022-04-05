@@ -1,8 +1,8 @@
 const saveCartItems = (valor) => {
  localStorage.setItem('cartItems', valor);
-  // console.log(saveCartItems);
+  // console.log('verdade', 'cartItems', valor);
 };
 
 if (typeof module !== 'undefined') {
   module.exports = saveCartItems;
-}
+} 
